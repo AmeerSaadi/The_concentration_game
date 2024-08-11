@@ -1,0 +1,13 @@
+#define pinLedRed 11
+#define pinLedGreen 9
+#define pinLedBlue 6
+#define pinLedYellow 10
+#define pinLedFail 7
+#define pinLedSuccess 8
+
+#define pinBtnRed 12
+#define pinBtnGreen 4
+#define pinBtnBlue 3
+#define pinBtnYellow 2
+
+#define pinBuzzer 5
