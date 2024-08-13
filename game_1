@@ -2,8 +2,6 @@
 #define pinLedGreen 9
 #define pinLedBlue 6
 #define pinLedYellow 10
-#define pinLedFail 7
-#define pinLedSuccess 8
 
 #define pinBtnRed 12
 #define pinBtnGreen 4
@@ -11,3 +9,15 @@
 #define pinBtnYellow 2
 
 #define pinBuzzer 5
+
+int ledPins[] = {pinLedRed, pinLedGreen, pinLedBlue, pinLedYellow};
+int btnPins[] = {pinBtnRed, pinBtnGreen, pinBtnBlue, pinBtnYellow};
+bool ledState[4] = {false, false, false, false};
+
+unsigned long startTime;
+unsigned long firstPressTime;
+unsigned long lastReleaseTime;
+
+bool gameActive = false;
+bool waitingForInput = false;
+bool pressed[4] = {false, false, false, false};  
