@@ -21,3 +21,44 @@ unsigned long lastReleaseTime;
 bool gameActive = false;
 bool waitingForInput = false;
 bool pressed[4] = {false, false, false, false};  
+
+void setup() {
+  for (int i = 0; i < 4; i++) {
+    pinMode(ledPins[i], OUTPUT);
+    pinMode(btnPins[i], INPUT_PULLUP);
+  }
+  pinMode(pinBuzzer, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+  if (!gameActive) {
+    startGame();
+  } else if (waitingForInput) {
+    checkPlayerInput();
+  }
+}
+
+void startGame() {
+  resetGame();
+
+  for (int i = 0; i < 3; i++) {
+    int randIndex = random(0, 4);
+    while (ledState[randIndex]) {
+      randIndex = random(0, 4);
+    }
+    digitalWrite(ledPins[randIndex], HIGH);
+    ledState[randIndex] = true;
+  }
+  delay(1000);
+
+  for (int i = 0; i < 4; i++) {
+    digitalWrite(ledPins[i], LOW);
+  }
+  delay(1000);
+  beep();
+
+  waitingForInput = true;
+  firstPressTime = 0;
+}
