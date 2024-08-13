@@ -62,3 +62,46 @@ void startGame() {
   waitingForInput = true;
   firstPressTime = 0;
 }
+
+void checkPlayerInput() {
+  int correctPresses = 0;
+  unsigned long pressDuration;
+
+  for (int i = 0; i < 4; i++) {
+    int btnState = digitalRead(btnPins[i]);
+
+    if (btnState == LOW && !pressed[i]) {
+      pressed[i] = true;
+
+      if (firstPressTime == 0) {
+        firstPressTime = millis();
+      }
+
+      if (!ledState[i]) {
+        digitalWrite(pinLedRed, HIGH); 
+        fail();
+        return;
+      } else {
+        digitalWrite(pinLedGreen, HIGH);  
+        delay(500);
+        digitalWrite(pinLedGreen, LOW);
+        correctPresses++;
+      }
+    }
+
+    if (btnState == HIGH && pressed[i] && ledState[i]) {
+      lastReleaseTime = millis();
+    }
+  }
+
+  if (correctPresses == 3) {
+    pressDuration = lastReleaseTime - firstPressTime;
+    if (pressDuration < 1000) {
+      success();
+    } else {
+      fail();
+    }
+    waitingForInput = false;
+    gameActive = false;
+  }
+}
