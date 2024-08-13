@@ -105,3 +105,33 @@ void checkPlayerInput() {
     gameActive = false;
   }
 }
+
+void resetGame() {
+  for (int i = 0; i < 4; i++) {
+    ledState[i] = false;
+    pressed[i] = false;
+    digitalWrite(ledPins[i], LOW);
+  }
+  digitalWrite(pinLedRed, LOW);
+  digitalWrite(pinLedGreen, LOW);
+}
+
+void beep() {
+  digitalWrite(pinBuzzer, HIGH);
+  delay(100);
+  digitalWrite(pinBuzzer, LOW);
+}
+
+void fail() {
+  digitalWrite(pinLedRed, HIGH);
+  beep();
+  delay(1000);
+  digitalWrite(pinLedRed, LOW);
+}
+
+void success() {
+  digitalWrite(pinLedGreen, HIGH);
+  beep();
+  delay(1000);
+  digitalWrite(pinLedGreen, LOW);
+}
